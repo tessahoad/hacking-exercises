@@ -1,4 +1,4 @@
-package adventofcode.day5
+package adventofcode.day4
 
 import scala.collection.mutable.ArrayBuffer
 import scala.io.Source
