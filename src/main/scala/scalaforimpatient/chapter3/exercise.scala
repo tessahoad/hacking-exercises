@@ -10,7 +10,7 @@ object exercise extends App {
     1. Write a code snippet that sets a to an array of n
        random integers between 0 (inclusive) and n (exclusive).
   */
-  def partOne(n: Int) {
+  def partOne(n: Int): Unit = {
     val a = ArrayBuffer[Int](n)
     for (_ <- 0 until n) {
       a.append(Random.nextInt(n))
@@ -22,12 +22,12 @@ object exercise extends App {
      2. Write a loop that swaps adjacent elements of an array of integers.
         For example, Array(1, 2, 3, 4, 5) becomes Array(2, 1, 4, 3, 5).
   */
-  def partTwo(n: Int) {
+  def partTwo(n: Int): Unit = {
     val array = Range.inclusive(1, n).toArray
     for (i <- 0 until(array.length - 1, 2)) {
       val i1 = array(i)
       val i2 = array(i + 1)
-      array(i) = i2;
+      array(i) = i2
       array(i + 1) = i1
     }
     println(array.mkString("[", ",", "]"))
@@ -36,10 +36,10 @@ object exercise extends App {
   /*
      3. “Repeat the preceding assignment, but produce a new array with the swapped values. Use for/yield.”
   */
-  def partThree(n: Int) {
+  def partThree(n: Int): Unit = {
     val array = Range.inclusive(1, n).toArray
 
-    val result = for (i <- 0 until array.length) yield {
+    val result = for (i <- array.indices) yield {
       if (i % 2 == 0 && i + 1 == n) array(i)
       else if (i % 2 == 0 && i + 1 < n) array(i + 1)
       else array(i - 1)
@@ -51,12 +51,12 @@ object exercise extends App {
      4. Given an array of integers, produce a new array that contains all positive values of the original array,
      in their original order, followed by all values that are zero or negative, in their original order.
   */
-  def partFour(arr: Array[Int]) {
+  def partFour(arr: Array[Int]): Unit = {
 
     val positives = arr.filter(a => a > 0)
     val nonPositives = arr.filter(a => a <= 0)
 
-    val result = positives.appendedAll(nonPositives);
+    val result = positives.appendedAll(nonPositives)
 
     println(result.mkString("[", ",", "]"))
   }
@@ -64,7 +64,7 @@ object exercise extends App {
   /*
      5. How do you compute the average of an Array[Double]?
   */
-  def partFive(arr: Array[Double]) {
+  def partFive(arr: Array[Double]): Unit = {
 
     val result = arr.sum / arr.length
 
@@ -75,7 +75,7 @@ object exercise extends App {
      6. How do you rearrange the elements of an Array[Int] so that they appear in reverse sorted order?
      How do you do the same with an ArrayBuffer[Int]?
   */
-  def partSix(arr: Array[Int]) {
+  def partSix(arr: Array[Int]): Unit = {
 
     val result = arr.sorted.reverse
 
@@ -85,7 +85,7 @@ object exercise extends App {
   /*
      7. Write a code snippet that produces all values from an array with duplicates removed. (Hint: Look at Scaladoc.)
   */
-  def partSeven(arr: Array[Int]) {
+  def partSeven(arr: Array[Int]): Unit = {
 
     val result = arr.distinct
 
@@ -95,7 +95,7 @@ object exercise extends App {
   /*
      8. Collect indexes of the negative elements, reverse the sequence, drop the last index, and call a.remove(i) for each index.
   */
-  def partEight(arr: ArrayBuffer[Int]) {
+  def partEight(arr: ArrayBuffer[Int]): Unit = {
 
     val indices = arr.indices.filter(i => arr(i) < 0).reverse.dropRight(1)
 
@@ -108,7 +108,7 @@ object exercise extends App {
      9. Make a collection of all time zones returned by java.util.TimeZone.getAvailableIDs that are in America.
      Strip off the "America/" prefix and sort the result.
   */
-  def partNine() {
+  def partNine(): Unit = {
     val validStart = "America/"
     val availableIds = java.util.TimeZone.getAvailableIDs.filter(id => id.startsWith(validStart)).map(s => s.stripPrefix(validStart)).sorted
     println(availableIds.mkString("[", ",", "]"))
@@ -121,7 +121,7 @@ object exercise extends App {
       (Why this obscure class? It’s hard to find uses of java.util.List in the standard Java library.)
   */
   def partTen(): Unit = {
-    val flavors = SystemFlavorMap.getDefaultFlavorMap().asInstanceOf[SystemFlavorMap]
+    val flavors = SystemFlavorMap.getDefaultFlavorMap.asInstanceOf[SystemFlavorMap]
     val strings = flavors.getNativesForFlavor(DataFlavor.imageFlavor).asScala
     println(strings)
   }
