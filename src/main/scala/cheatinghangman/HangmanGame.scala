@@ -30,9 +30,32 @@ class HangmanGame(val player: Player,
       val latestState = new GameState(newWord, previousRound.incorrectGuesses + playerGuess, previousRound.correctGuesses, status)
       new HangmanGame(player, executioner, wordSet, turns.appended(latestState))
     } else {
-      val status = if (guessWord.forall(c => (previousRound.correctGuesses + playerGuess).contains(c))) Won else InProgress
+      val status = if (newWord.forall(c => (previousRound.correctGuesses + playerGuess).contains(c))) Won else InProgress
       val latestState = new GameState(newWord, previousRound.incorrectGuesses, previousRound.correctGuesses + playerGuess, status)
       new HangmanGame(player, executioner, wordSet, turns.appended(latestState))
+    }
+  }
+
+  def getValidPlayerGuess(game: HangmanGame): Char = {
+    val guess = game.player.guessLetter(game.turns.last.correctGuesses, game.turns.last.incorrectGuesses, game.turns.last.guessWord.length)
+    val isValid = validatePlayerGuess(guess, game.turns.last.getAllGuesses())
+    if (isValid) {
+      guess(0)
+    }
+    else getValidPlayerGuess(game)
+  }
+
+  private def validatePlayerGuess(guess: String, guesses: Set[Char]): Boolean = {
+    try {
+      new LengthValidator(1).validate(guess)
+      new CharacterValidator(('a' to 'z').toArray).validate(guess(0))
+      new RepeatedCharacterValidator(guesses.toArray).validate(guess(0))
+      true
+    } catch {
+      //    TODO: change so Display is responsible for display?
+      case lengthException: GuessTooLongException => println(lengthException.getUserFeedback); false
+      case invalidCharException: InvalidCharacterException => println(invalidCharException.getUserFeedback); false
+      case characterAlreadyGuessedException: RepeatedCharacterException => println(characterAlreadyGuessedException.getUserFeedback); false
     }
   }
 }

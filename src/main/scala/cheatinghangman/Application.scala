@@ -5,9 +5,9 @@ import cheatinghangman.model._
 
 object Application {
   def main(args: Array[String]): Unit = {
-    val player = new HumanPlayer
+    val player = new ComputerPlayer()
     val executioner = new CheatingExecutioner
-    val wordSet = new OnlineDictionary().getWords(5)
+    val wordSet = new OnlineDictionary().getWords(5, 100)
     val initialWord = executioner.pickWord(wordSet)
     val userInterface = new ConsoleUI
     val initialState = new GameState(initialWord, Set(), Set(), InProgress)

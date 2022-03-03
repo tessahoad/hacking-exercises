@@ -52,4 +52,6 @@ object Application {
     }
     println(s"Sentence matches = ${history.last}")
   }
+
+  // TODO: generalise to genetic programming framework, pull out some traits, random individual (e.g. could have random ints) both evolving framework and thing that's trying to evolve
 }
