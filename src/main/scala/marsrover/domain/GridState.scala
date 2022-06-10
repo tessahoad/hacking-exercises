@@ -1,6 +1,8 @@
 package marsrover.domain
 
-import marsrover.domain.model.{Bearing, East, Grid, LeftRotate, MarsRover, North, RightRotate, RotateDirection, South, West}
+import marsrover.domain.model.{Bearing, Coordinate, East, Grid, LeftRotate, MarsRover, North, RightRotate, RotateDirection, South, West, origin}
+
+import scala.io.Source
 
 case class GridState(rovers: Seq[MarsRover], grid: Grid) {
 
@@ -64,11 +66,58 @@ case class GridState(rovers: Seq[MarsRover], grid: Grid) {
     )
   }
 
-  private def moveRover(roverWithPendingInstructions: MarsRover, instruction: String) = {
+  def moveRover(roverWithPendingInstructions: MarsRover, instruction: String) = {
     instruction match {
       case "L" => rotate(roverWithPendingInstructions, LeftRotate)
       case "R" => rotate(roverWithPendingInstructions, RightRotate)
       case "M" => move(roverWithPendingInstructions)
     }
+  }
+}
+
+object GridState {
+
+  def readInstructionsFile(instructionFileLocation: String): Seq[String] = {
+    Source.fromResource(instructionFileLocation).getLines().toSeq
+  }
+
+  def constructGrid(gridConstructionInstruction: String): Grid = {
+    val maxGridCoordinates = gridConstructionInstruction.split(" ").map(_.toInt)
+    val maxCoordinate = Coordinate(maxGridCoordinates(0), maxGridCoordinates(1))
+    Grid(origin, maxCoordinate)
+  }
+
+  def parseRoverBearingInstruction(roverLocationInstruction: String): Bearing = {
+    roverLocationInstruction.split(" ").last match {
+      case "N" => North
+      case "E" => East
+      case "S" => South
+      case "W" => West
+      case _ => North
+    }
+  }
+
+  def parseRoverLocationInstruction(roverLocationInstruction: String): Coordinate = {
+    val roverGridLocation = roverLocationInstruction.split(" ").init.map(_.toInt)
+    Coordinate(roverGridLocation.head, roverGridLocation.last)
+  }
+
+  def constructRoverWithInitialCoordinateAndInstructions(roverLocationInstruction: String, roverInstructions: String): MarsRover = {
+    val roverGridLocation = parseRoverLocationInstruction(roverLocationInstruction)
+    val roverGridBearing = parseRoverBearingInstruction(roverLocationInstruction)
+    MarsRover(roverGridLocation, roverGridBearing, roverInstructions.map(_.toString), Seq())
+  }
+
+  def getInitialGrid(instructionFileLocation: String): GridState = {
+    val instructionsAsStrings = readInstructionsFile(instructionFileLocation)
+
+    val gridConstructionInstruction = instructionsAsStrings.head
+    val grid = constructGrid(gridConstructionInstruction)
+
+    val roverConstructionInstructions = instructionsAsStrings.tail
+    val rovers = roverConstructionInstructions.grouped(2).map { x =>
+      constructRoverWithInitialCoordinateAndInstructions(x.head, x.last)
+    }.toSeq
+    GridState(rovers, grid)
   }
 }

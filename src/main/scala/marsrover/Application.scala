@@ -1,6 +1,6 @@
 package marsrover
 
-import marsrover.scratchpad.getInitialGrid
+import marsrover.domain.GridState.getInitialGrid
 import marsrover.userinterface.ConsoleUI
 
 object Application {
