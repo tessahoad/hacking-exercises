@@ -1,6 +1,7 @@
 package marsrover
 
-import marsrover.scratchpad.{ConsoleUI, MarsRover, North, getInitialGrid, origin, rotate}
+import marsrover.scratchpad.getInitialGrid
+import marsrover.userinterface.ConsoleUI
 
 object Application {
   def main(args: Array[String]): Unit = {
