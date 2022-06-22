@@ -1,6 +1,6 @@
-package texasholdem.model
+package texasholdem.partone.model
 
-import texasholdem.model.Game
+import texasholdem.partone.model.Game
 
 trait Player {
   val hand: Seq[Card]

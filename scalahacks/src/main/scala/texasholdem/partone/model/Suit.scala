@@ -1,6 +1,6 @@
-package texasholdem.model
+package texasholdem.partone.model
 
-import texasholdem.model.Deck.standardCards
+import texasholdem.partone.model.Deck.standardCards
 
 import scala.util.Random
 

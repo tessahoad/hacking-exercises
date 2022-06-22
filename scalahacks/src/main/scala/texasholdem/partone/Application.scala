@@ -1,8 +1,8 @@
 package texasholdem.partone
 
-import texasholdem.model.{ComputerPlayer, Deck, Game}
-import texasholdem.model.Game.dealToPlayers
-import texasholdem.userinterface.ConsoleUI
+import texasholdem.partone.model.Game.dealToPlayers
+import texasholdem.partone.model._
+import texasholdem.partone.userinterface.ConsoleUI
 
 object Application {
 

@@ -1,6 +1,6 @@
-package texasholdem.model
+package texasholdem.partone.model
 
-import texasholdem.model.{Card, Player}
+import texasholdem.partone.model.{Card, Player}
 
 case class Game(deck: Deck,
                 players: Seq[Player],

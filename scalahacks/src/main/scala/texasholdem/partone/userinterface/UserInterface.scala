@@ -1,6 +1,6 @@
-package texasholdem.userinterface
+package texasholdem.partone.userinterface
 
-import texasholdem.model.Game
+import texasholdem.partone.model.Game
 
 trait UserInterface {
   def display(table: Game): String
