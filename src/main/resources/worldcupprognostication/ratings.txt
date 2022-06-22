@@ -1,0 +1,16 @@
+England,1692
+Germany,1775
+Netherlands,1726
+Denmark,1503
+Norway,1537
+Sweden,1801
+France,1832
+Belgium,1347
+Iceland,1476
+Spain,1668
+Finland,1210
+Austria,1380
+Italy,1582
+Switzerland,1327
+Northern Ireland,980
+Portugal,1248

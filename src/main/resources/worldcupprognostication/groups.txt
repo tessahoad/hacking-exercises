@@ -1,0 +1,4 @@
+A,England,Austria,Norway,Northern Ireland
+B,Germany,Denmark,Spain,Finland
+C,Netherlands,Sweden,Switzerland,Portugal
+D,France,Italy,Belgium,Iceland
