@@ -13,7 +13,7 @@ object ConsoleUI extends UI {
 
 object SpeechUI extends UI {
   override def tellTime(time: String): String = {
-    Runtime.getRuntime.exec(s"say $time")
+    Runtime.getRuntime.exec(s"say --voice=Tessa $time")
     time
   }
 }

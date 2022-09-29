@@ -1,6 +1,12 @@
 package talkingclock
 
+import java.text.SimpleDateFormat
+import java.util.Calendar
+
 object TakingClockApp {
+  val now = Calendar.getInstance().getTime
+  val inputFormat = new SimpleDateFormat("hh:mm")
+
   val inputData = Seq(
     "00:00",
     "01:30",
@@ -8,7 +14,8 @@ object TakingClockApp {
     "14:01",
     "20:29",
     "21:00",
-    "23:12"
+    "23:12",
+    inputFormat.format(now)
   )
 
   def main(args: Array[String]): Unit = {
