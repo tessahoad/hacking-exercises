@@ -5,7 +5,7 @@ import java.util.Calendar
 
 object TakingClockApp {
   val now = Calendar.getInstance().getTime
-  val inputFormat = new SimpleDateFormat("hh:mm")
+  val inputFormat = new SimpleDateFormat("HH:mm")
 
   val inputData = Seq(
     "00:00",
@@ -19,7 +19,7 @@ object TakingClockApp {
   )
 
   def main(args: Array[String]): Unit = {
-    val myUI = ConsoleUI
+    val myUI = SpeechUI
     val clocks = inputData.map(timeString => Clock.fromString(timeString))
     clocks.foreach(clock => myUI.tellTime(clock.myTimeAsString()))
   }
