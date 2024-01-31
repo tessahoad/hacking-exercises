@@ -56,9 +56,11 @@ case class Labyrinth(cells: Seq[(Cell, Traversed)],
     }
   }
 }
+
 object Labyrinth {
 
   type Traversed = Boolean
+
   def untraversedLabyrinth(width: Int, height: Int, random: Random): Labyrinth = {
     val randomStart = (random.nextInt(width), random.nextInt(height))
     val startingCell = Cell(randomStart._1, randomStart._2)
