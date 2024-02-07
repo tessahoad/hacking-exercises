@@ -19,7 +19,7 @@ interface Deck {
     val cards: List<Card>
     fun shuffle(): Deck
 
-    fun dealFrom(numCards: Int): Pair<Deck, List<Card>>
+    fun burnAndDealFrom(numCards: Int, cardsToBurn: Int): Pair<Deck, List<Card>>
 }
 
 data class StandardDeck(override val cards: List<Card>) : Deck {
@@ -34,9 +34,10 @@ data class StandardDeck(override val cards: List<Card>) : Deck {
         return this.copy(cards = cards.shuffled())
     }
 
-    override fun dealFrom(numCards: Int): Pair<Deck, List<Card>> {
-        val dealtCards = cards.take(numCards)
-        val newDeck = cards.takeLast(cards.size - 2)
+    override fun burnAndDealFrom(numCards: Int, cardsToBurn: Int): Pair<Deck, List<Card>> {
+        val deckAfterBurn = cards.takeLast(cards.size - cardsToBurn)
+        val dealtCards = deckAfterBurn.take(numCards)
+        val newDeck = deckAfterBurn.takeLast(deckAfterBurn.size - numCards)
         return Pair(this.copy(cards = newDeck), dealtCards)
     }
 }
@@ -79,9 +80,4 @@ data class GameState(
             )
         }
     }
-}
-
-enum class Hand(val rank: Int) {
-    ROYAL_FLUSH(10), STRAIGHT_FLUSH(9), FOUR_OF_A_KIND(8), FULL_HOUSE(7), FLUSH(6),
-    STRAIGHT(5), THREE_OF_A_KIND(4), TWO_PAIR(3), PAIR(2), HIGH_CARD(1)
 }

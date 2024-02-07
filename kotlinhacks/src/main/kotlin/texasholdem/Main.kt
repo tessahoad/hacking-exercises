@@ -10,7 +10,7 @@ object Main {
         val newGame = GameState.newStandardGame()
 
         val gameStates = generateSequence(newGame){ TexasHoldEmGame.play(it) }
-            .take(Round.entries.size)
+            .take(Round.entries.size + 1)
             .forEach { ConsoleUI.display(it) }
     }
 }

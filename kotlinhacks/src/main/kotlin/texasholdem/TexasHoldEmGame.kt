@@ -3,6 +3,7 @@ package texasholdem
 import texasholdem.domain.GameState
 import texasholdem.domain.Player
 import texasholdem.domain.Round
+import texasholdem.userinterfaces.ConsoleUI
 
 object TexasHoldEmGame {
 
@@ -12,7 +13,7 @@ object TexasHoldEmGame {
             Round.FLOP -> stateAfterFlop(state)
             Round.TURN -> stateAfterTurn(state)
             Round.RIVER -> stateAfterRiver(state)
-            Round.REVEAL -> state
+            Round.REVEAL -> reveal(state)
             else -> {
                 throw RuntimeException("bork")
             }
@@ -25,14 +26,14 @@ object TexasHoldEmGame {
 
     private fun dealHoleCards(state: GameState): GameState {
         return state.players.fold(state) { gameState: GameState, player: Player ->
-            val (newDeck, holeCards) = gameState.deck.dealFrom(2)
+            val (newDeck, holeCards) = gameState.deck.burnAndDealFrom(2, 0)
             val hole = Pair(holeCards.first(), holeCards.last())
             state.copy(deck = newDeck, holeCards = gameState.holeCards.plus(Pair(player,hole)))
         }
     }
 
     private fun stateAfterFlop(state: GameState): GameState {
-        return dealCommunityCards(state).copy(round = Round.TURN)
+        return dealCommunityCards(state, 3).copy(round = Round.TURN)
     }
 
     private fun stateAfterTurn(state: GameState): GameState {
@@ -43,8 +44,15 @@ object TexasHoldEmGame {
         return dealCommunityCards(state).copy(round = Round.REVEAL)
     }
 
-    private fun dealCommunityCards(gameState: GameState): GameState {
-        val (newDeck, communityCard) = gameState.deck.dealFrom(1)
+    private fun reveal(state: GameState): GameState {
+        val classifiedHands = state.holeCards.map { (player, hole) -> Pair(player, HandClassifier.classify(hole, state.communityCards))}.toMap()
+        val winningHand = classifiedHands.maxBy { it.value.handType.rank }.value
+        ConsoleUI.displayReveal(winningHand, classifiedHands.values.toList())
+        return state
+    }
+
+    private fun dealCommunityCards(gameState: GameState, number: Int = 1): GameState {
+        val (newDeck, communityCard) = gameState.deck.burnAndDealFrom(number, 1)
         return gameState.copy(deck = newDeck, communityCards = gameState.communityCards + communityCard)
     }
 }
