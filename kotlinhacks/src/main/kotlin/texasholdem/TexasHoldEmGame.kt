@@ -46,7 +46,7 @@ object TexasHoldEmGame {
 
     private fun reveal(state: GameState): GameState {
         val classifiedHands = state.holeCards.map { (player, hole) -> Pair(player, HandClassifier.classify(hole, state.communityCards))}.toMap()
-        val winningHand = classifiedHands.maxBy { it.value.handType.rank }.value
+        val winningHand = HandClassifier.winningHand(classifiedHands.values)
         ConsoleUI.displayReveal(winningHand, classifiedHands.values.toList())
         return state
     }

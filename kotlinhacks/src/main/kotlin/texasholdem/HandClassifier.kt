@@ -11,6 +11,10 @@ object HandClassifier {
         return bestHand
     }
 
+    fun winningHand(hands: Collection<Hand>) : Hand {
+        return hands.maxBy { it.handType.rank }
+    }
+
     private fun classify(cards: List<Card>): Hand {
         val handType = HandType.entries.filter { it.formedFrom(cards) }.maxBy { it.rank }
         return Hand(handType, cards)
