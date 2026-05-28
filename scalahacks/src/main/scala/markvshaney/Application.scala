@@ -7,7 +7,7 @@ import scala.util.Random
 object Application {
   private val limit = 50
 
-  def main(args: Array[String]) = {
+  def main(args: Array[String]): Unit = {
     val textSource = TrainingTextSource("markvshaney/dickinson-poems.txt")
     val text = ResourceTrainingTextReader.read(textSource)
     val ngrams = TrainingTextParser.parse(text, 3)
