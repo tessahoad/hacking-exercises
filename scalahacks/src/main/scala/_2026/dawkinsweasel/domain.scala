@@ -1,8 +1,8 @@
-package dawkinsweasel._2026
+package _2026.dawkinsweasel
 
 import com.github.vickumar1981.stringdistance.StringDistance._
 import com.github.vickumar1981.stringdistance.impl.ConstantGap
-import dawkinsweasel._2026.domain.Mutator
+import domain.Mutator
 
 import scala.util.Random
 

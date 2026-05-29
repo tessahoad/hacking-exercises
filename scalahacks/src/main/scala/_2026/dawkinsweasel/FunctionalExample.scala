@@ -1,4 +1,4 @@
-package dawkinsweasel._2026
+package _2026.dawkinsweasel
 
 import scala.util.Random
 
